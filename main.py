@@ -4,16 +4,16 @@ from PIL import Image, ImageTk
 import math
 import sys
 
-# Import sound module based on OS
+
 if sys.platform.startswith("win"):
-    import winsound  # Windows beep sound
+    import winsound  
 else:
-    import os  # Linux/macOS beep sound
+    import os  
 
 # ---------------------------- CONSTANTS ------------------------------- #
-WORK_MIN = 25  # Work session duration in minutes
-SHORT_BREAK_MIN = 5  # Short break duration in minutes
-LONG_BREAK_MIN = 15  # Long break duration in minutes
+WORK_MIN = 25  
+SHORT_BREAK_MIN = 5  
+LONG_BREAK_MIN = 15  
 FONT_NAME = "Arial"
 reps = 0
 timer = None
@@ -39,15 +39,15 @@ def start_timer():
 
     if reps % 8 == 0:
         title_label.config(text="Long Break", fg="red")
-        play_buzzer()  # Beep at the start of Long Break
+        play_buzzer() 
         count_down(long_break_sec)
     elif reps % 2 == 0:
         title_label.config(text="Short Break", fg="blue")
-        play_buzzer()  # Beep at the start of Short Break
+        play_buzzer()  
         count_down(short_break_sec)
     else:
         title_label.config(text="Work", fg="green")
-        play_buzzer()  # Beep at the start of Work session
+        play_buzzer() 
         count_down(work_sec)
 
 # ---------------------------- COUNTDOWN MECHANISM ------------------------------- #
@@ -63,7 +63,7 @@ def count_down(count):
         global timer
         timer = window.after(1000, count_down, count - 1)
     else:
-        play_buzzer()  # Beep when the timer ends
+        play_buzzer() 
         start_timer()
         marks = "✔" * (reps // 2)
         check_marks.config(text=marks)
@@ -71,23 +71,23 @@ def count_down(count):
 # ---------------------------- SOUND ALERT (BUZZER) ------------------------------- #
 def play_buzzer():
     """Plays a beep sound when a session starts or ends."""
-    if sys.platform.startswith("win"):  # Windows beep sound
-        winsound.Beep(1000, 500)  # Frequency=1000Hz, Duration=500ms
-    else:  # Linux/macOS beep sound
-        os.system("echo -e '\a'")  # ASCII Bell character to trigger beep
+    if sys.platform.startswith("win"):  
+        winsound.Beep(1000, 500) 
+    else:
+        os.system("echo -e '\a'") 
 
 # ---------------------------- UI SETUP ------------------------------- #
 window = tk.Tk()
 window.title("Pomodoro Timer")
 window.config(padx=50, pady=25, bg="white")
 
-# Title Label
+
 title_label = tk.Label(text="Pomodoro Timer", font=(FONT_NAME, 20, "bold"), fg="black", bg="white")
 title_label.grid(column=1, row=0)
 
-# Load and Display Tomato Image
-img = Image.open("tomato.png")  # Ensure the image is in the same folder
-img = img.resize((200, 224), Image.LANCZOS)  # Resize for better display
+
+img = Image.open("tomato.png") 
+img = img.resize((200, 224), Image.LANCZOS) 
 tomato_img = ImageTk.PhotoImage(img)
 
 canvas = tk.Canvas(width=200, height=224, bg="white", highlightthickness=0)
